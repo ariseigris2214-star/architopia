@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architopia - Visualizing Tomorrow</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0F0F23;
+            --secondary: #1A1A2E;
+            --accent: #00D4FF;
+            --accent-2: #FF6B9D;
+            --accent-3: #C77DFF;
+            --light: #F8FAFF;
+            --gray: #8892B0;
+            --dark-gray: #64748B;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            overflow-x: hidden;
+            background: var(--primary);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(15, 15, 35, 0.95);
+            padding: 0.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            position: relative;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--accent), var(--accent-2));
+            filter: blur(10px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section with Complex Background */
+        .hero {
+            height: 100vh;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Grid Background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: 
+                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 1;
+        }
+        
+        /* Particle System */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: particleFloat 15s linear infinite;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        /* Complex Architectural Wireframes */
+        .wireframe {
+            position: absolute;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            animation: wireframeRotate 25s linear infinite;
+        }
+        
+        .wireframe-1 {
+            top: 10%;
+            left: 5%;
+            width: 200px;
+            height: 300px;
+            transform-origin: center;
+            clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);
+        }
+        
+        .wireframe-2 {
+            top: 20%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+        }
+        
+        .wireframe-3 {
+            bottom: 15%;
+            left: 15%;
+            width: 180px;
+            height: 120px;
+            clip-path: polygon(25% 0%, 100% 0%, 100% 75%, 75% 100%, 0% 100%, 0% 25%);
+            border-color: rgba(199, 125, 255, 0.4);
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: var(--light);
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: clamp(4rem, 10vw, 10rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+            background: linear-gradient(45deg, var(--accent), var(--accent-2), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+        }
+        
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1s;
+            color: var(--gray);
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.5s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+        
+        /* Floating Geometric Shapes */
+        .geometric-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.8;
+            animation: complexFloat 12s ease-in-out infinite;
+            filter: blur(0.5px);
+        }
+        
+        .shape:nth-child(1) {
+            top: 15%;
+            left: 8%;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation-delay: 0s;
+        }
+        
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 12%;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+            border-radius: 50%;
+            animation-delay: 2s;
+        }
+        
+        .shape:nth-child(3) {
+            bottom: 25%;
+            left: 18%;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-3), var(--accent));
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+            animation-delay: 4s;
+        }
+        
+        .shape:nth-child(4) {
+            top: 35%;
+            right: 25%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-3));
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation-delay: 1s;
+        }
+        
+        .shape:nth-child(5) {
+            bottom: 15%;
+            right: 35%;
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent));
+            border-radius: 50%;
+            animation-delay: 3s;
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        /* Enhanced Drawing Generator */
+        .generator-container {
+            background: rgba(248, 250, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .generator-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.05) 0%, 
+                rgba(255, 107, 157, 0.05) 50%, 
+                rgba(199, 125, 255, 0.05) 100%);
+            z-index: -1;
+            animation: gradientShift 10s ease-in-out infinite;
+        }
+        
+        .generator-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .generator-input textarea {
+            flex: 1;
+            padding: 1.5rem;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            background: rgba(248, 250, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .generator-input textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+        }
+        
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+        
+        .drawing-canvas {
+            width: 100%;
+            height: 500px;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+            margin-top: 2rem;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Education Cards */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .edu-card {
+            background: rgba(248, 250, 255, 0.05);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .edu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+        }
+        
+        .edu-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.02) 0%, 
+                rgba(255, 107, 157, 0.02) 50%, 
+                rgba(199, 125, 255, 0.02) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .edu-card:hover::after {
+            opacity: 1;
+        }
+        
+        .edu-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 
+                0 25px 80px rgba(0, 212, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .edu-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+        
+        .edu-card p {
+            color: var(--gray);
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            color: var(--light);
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .value-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(248, 250, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.05) 0%, 
+                rgba(255, 107, 157, 0.05) 50%, 
+                rgba(199, 125, 255, 0.05) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .value-item:hover::before {
+            opacity: 1;
+        }
+        
+        .value-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.1);
+        }
+        
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-item h4 {
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+        
+        .value-item p {
+            color: var(--gray);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--light);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.05) 0%, 
+                rgba(255, 107, 157, 0.05) 100%);
+            z-index: -1;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes complexFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-30px) rotate(90deg) scale(1.1); 
+            }
+            50% { 
+                transform: translateY(-60px) rotate(180deg) scale(0.9); 
+            }
+            75% { 
+                transform: translateY(-30px) rotate(270deg) scale(1.05); 
+            }
+        }
+        
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(200px);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes wireframeRotate {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+                opacity: 0.6;
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+                opacity: 0.3;
+            }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% {
+                background: linear-gradient(135deg, 
+                    rgba(0, 212, 255, 0.05) 0%, 
+                    rgba(255, 107, 157, 0.05) 50%, 
+                    rgba(199, 125, 255, 0.05) 100%);
+            }
+            50% {
+                background: linear-gradient(135deg, 
+                    rgba(199, 125, 255, 0.05) 0%, 
+                    rgba(0, 212, 255, 0.05) 50%, 
+                    rgba(255, 107, 157, 0.05) 100%);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .generator-input {
+                flex-direction: column;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">Architopia</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#generator">Generator</a></li>
+                <li><a href="#education">Learn</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <!-- Animated Grid Background -->
+        <div class="particles" id="particles"></div>
+        
+        <!-- Architectural Wireframes -->
+        <div class="wireframe wireframe-1"></div>
+        <div class="wireframe wireframe-2"></div>
+        <div class="wireframe wireframe-3"></div>
+        
+        <!-- Floating Geometric Shapes -->
+        <div class="geometric-bg">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>Architopia</h1>
+            <p>Visualizing Tomorrow's Architecture Today</p>
+            <button class="cta-button" onclick="document.getElementById('generator').scrollIntoView({behavior: 'smooth'})">
+                Start Creating
+            </button>
+        </div>
+    </section>
+
+    <section id="generator" class="section">
+        <h2 class="section-title">Architecture Visualizer</h2>
+        <div class="generator-container">
+            <h3 style="color: var(--light); font-size: 1.8rem; margin-bottom: 1rem;">Describe Your Vision</h3>
+            <p style="color: var(--gray); margin-bottom: 2rem;">Enter a description of your architectural concept, and our AI will generate a complex visual representation.</p>
+            
+            <div class="generator-input">
+                <textarea id="description" placeholder="Describe your architectural vision... (e.g., 'A futuristic skyscraper with organic curves, glass facade, rooftop gardens, and steel framework')"></textarea>
+                <button class="generate-btn" onclick="generateDrawing()">Generate</button>
+            </div>
+            
+            <canvas id="drawingCanvas" class="drawing-canvas"></canvas>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <h2 class="section-title">Architecture Education</h2>
+        <div class="education-grid">
+            <div class="edu-card">
+                <h3>Design Principles</h3>
+                <p>Learn about fundamental design principles including balance, proportion, rhythm, and harmony. These elements form the foundation of all great architectural works.</p>
+            </div>
+            <div class="edu-card">
+                <h3>Sustainable Design</h3>
+                <p>Discover how modern architecture embraces sustainability through green building materials, energy efficiency, and environmental consciousness.</p>
+            </div>
+            <div class="edu-card">
+                <h3>Structural Systems</h3>
+                <p>Understand different structural systems from post-and-beam to modern steel frame construction, and how they influence architectural form.</p>
+            </div>
+            <div class="edu-card">
+                <h3>Architectural Styles</h3>
+                <p>Explore various architectural movements from Classical to Contemporary, understanding their historical context and defining characteristics.</p>
+            </div>
+            <div class="edu-card">
+                <h3>Space Planning</h3>
+                <p>Master the art of organizing interior spaces for functionality, flow, and user experience in residential and commercial projects.</p>
+            </div>
+            <div class="edu-card">
+                <h3>Building Technology</h3>
+                <p>Stay current with cutting-edge technologies like BIM, parametric design, and smart building systems revolutionizing architecture.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">About Architopia</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Vision</h3>
+                <p>Architopia is revolutionizing how people interact with architectural concepts. We bridge the gap between imagination and visualization, making architectural design accessible to everyone through innovative AI-powered tools.</p>
+                
+                <h3>How We Work</h3>
+                <p>Our platform uses advanced machine learning algorithms to interpret textual descriptions and transform them into architectural visualizations. By analyzing thousands of architectural elements, styles, and design principles, we create meaningful visual representations of your ideas.</p>
+                
+                <h3>Our Process</h3>
+                <p>1. <strong>Describe:</strong> Input your architectural vision in natural language<br>
+                2. <strong>Analyze:</strong> Our AI processes your description using architectural knowledge<br>
+                3. <strong>Generate:</strong> Create complex visual representations based on design principles<br>
+                4. <strong>Refine:</strong> Iterate and improve based on your feedback</p>
+            </div>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="value-icon">🎯</div>
+                <h4>Innovation</h4>
+                <p>Pushing boundaries in architectural visualization and AI-driven design tools</p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">🌱</div>
+                <h4>Sustainability</h4>
+                 <p>Promoting eco-conscious design and sustainable building practices</p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">👥</div>
+                <h4>Accessibility</h4>
+                <p>Making architectural design tools available to everyone, not just professionals</p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon">🔬</div>
+                <h4>Education</h4>
+                <p>Fostering architectural literacy and design understanding</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Get In Touch</h2>
+        <div style="text-align: center;">
+            <p>Ready to bring your architectural visions to life?</p>
+            <p style="margin-top: 1rem; color: var(--gray);">Contact us at: hello@architopia.com</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Architopia. Visualizing the future of architecture.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Drawing generator function
+        function generateDrawing() {
+            const description = document.getElementById('description').value;
+            if (!description.trim()) {
+                alert('Please enter a description first!');
+                return;
+            }
+
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Set background
+            ctx.fillStyle = '#f8f8f8';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Generate architectural drawing based on description
+            generateArchitecturalDrawing(ctx, description.toLowerCase(), canvas.width, canvas.height);
+        }
+
+        function generateArchitecturalDrawing(ctx, description, width, height) {
+            // Set drawing properties
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.fillStyle = '#e0e0e0';
+            
+            // Base structure - always draw a foundation/ground line
+            ctx.beginPath();
+            ctx.moveTo(50, height - 50);
+            ctx.lineTo(width - 50, height - 50);
+            ctx.stroke();
+            
+            // Analyze description for architectural elements
+            const isModern = description.includes('modern') || description.includes('contemporary');
+            const hasGlass = description.includes('glass') || description.includes('window');
+            const isTall = description.includes('tall') || description.includes('tower') || description.includes('high');
+            const isCurved = description.includes('curved') || description.includes('round');
+            const hasRoof = description.includes('roof') || description.includes('pitched');
+            const isHouse = description.includes('house') || description.includes('home') || description.includes('residential');
+            
+            let buildingHeight = isTall ? height * 0.7 : height * 0.5;
+            let buildingWidth = width * 0.6;
+            let startX = (width - buildingWidth) / 2;
+            let startY = height - 50 - buildingHeight;
+            
+            if (isCurved) {
+                // Draw curved/circular building
+                drawCurvedBuilding(ctx, startX + buildingWidth/2, startY + buildingHeight/2, buildingWidth/2, buildingHeight/2);
+            } else if (isModern) {
+                // Draw modern rectangular building
+                drawModernBuilding(ctx, startX, startY, buildingWidth, buildingHeight, hasGlass);
+            } else if (isHouse) {
+                // Draw traditional house
+                drawTraditionalHouse(ctx, startX, startY, buildingWidth, buildingHeight, hasRoof);
+            } else {
+                // Default modern structure
+                drawModernBuilding(ctx, startX, startY, buildingWidth, buildingHeight, hasGlass);
+            }
+            
+            // Add environmental elements
+            if (description.includes('tree') || description.includes('landscape')) {
+                drawTrees(ctx, width, height);
+            }
+            
+            if (description.includes('water') || description.includes('lake') || description.includes('pond')) {
+                drawWater(ctx, width, height);
+            }
+            
+            // Add architectural details
+            if (description.includes('column') || description.includes('pillar')) {
+                drawColumns(ctx, startX, startY, buildingWidth, buildingHeight);
+            }
+            
+            // Add title
+            ctx.fillStyle = '#333';
+            ctx.font = '16px Inter';
+            ctx.fillText('Generated Architectural Concept', 20, 30);
+        }
+
+        function drawModernBuilding(ctx, x, y, width, height, hasGlass) {
+            // Main structure
+            ctx.fillStyle = hasGlass ? '#b8e0ff' : '#e0e0e0';
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeRect(x, y, width, height);
+            
+            // Add windows/glass panels
+            if (hasGlass) {
+                ctx.fillStyle = '#87ceeb';
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 4; j++) {
+                        let winX = x + (width / 4) * (i + 0.5);
+                        let winY = y + (height / 5) * (j + 1);
+                        ctx.fillRect(winX - 15, winY - 10, 30, 20);
+                        ctx.strokeRect(winX - 15, winY - 10, 30, 20);
+                    }
+                }
+            }
+        }
+
+        function drawCurvedBuilding(ctx, centerX, centerY, radiusX, radiusY) {
+            // Draw elliptical/curved building
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+            ctx.fillStyle = '#e0e0e0';
+            ctx.fill();
+            ctx.stroke();
+            
+            // Add curved windows
+            ctx.fillStyle = '#87ceeb';
+            for (let angle = 0; angle < 360; angle += 60) {
+                let rad = (angle * Math.PI) / 180;
+                let winX = centerX + Math.cos(rad) * radiusX * 0.7;
+                let winY = centerY + Math.sin(rad) * radiusY * 0.7;
+                ctx.beginPath();
+                ctx.arc(winX, winY, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+
+        function drawTraditionalHouse(ctx, x, y, width, height, hasRoof) {
+            // Main house structure
+            ctx.fillStyle = '#f0e0d0';
+            ctx.fillRect(x, y + height * 0.3, width, height * 0.7);
+            ctx.strokeRect(x, y + height * 0.3, width, height * 0.7);
+            
+            // Roof
+            if (hasRoof) {
+                ctx.fillStyle = '#8b4513';
+                ctx.beginPath();
+                ctx.moveTo(x - width * 0.1, y + height * 0.3);
+                ctx.lineTo(x + width/2, y);
+                ctx.lineTo(x + width + width * 0.1, y + height * 0.3);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+            
+            // Door
+            ctx.fillStyle = '#654321';
+            ctx.fillRect(x + width * 0.4, y + height * 0.7, width * 0.2, height * 0.3);
+            ctx.strokeRect(x + width * 0.4, y + height * 0.7, width * 0.2, height * 0.3);
+            
+            // Windows
+            ctx.fillStyle = '#87ceeb';
+            ctx.fillRect(x + width * 0.15, y + height * 0.45, width * 0.15, height * 0.15);
+            ctx.strokeRect(x + width * 0.15, y + height * 0.45, width * 0.15, height * 0.15);
+            ctx.fillRect(x + width * 0.7, y + height * 0.45, width * 0.15, height * 0.15);
+            ctx.strokeRect(x + width * 0.7, y + height * 0.45, width * 0.15, height * 0.15);
+        }
+
+        function drawTrees(ctx, width, height) {
+            // Simple tree representation
+            ctx.fillStyle = '#228b22';
+            for (let i = 0; i < 3; i++) {
+                let treeX = 80 + i * (width - 200);
+                let treeY = height - 100;
+                
+                // Tree trunk
+                ctx.fillStyle = '#8b4513';
+                ctx.fillRect(treeX - 5, treeY, 10, 30);
+                
+                // Tree crown
+                ctx.fillStyle = '#228b22';
+                ctx.beginPath();
+                ctx.arc(treeX, treeY - 10, 20, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        }
+
+        function drawWater(ctx, width, height) {
+            // Water body
+            ctx.fillStyle = '#4682b4';
+            ctx.beginPath();
+            ctx.ellipse(width * 0.8, height - 30, 60, 20, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function drawColumns(ctx, buildingX, buildingY, buildingWidth, buildingHeight) {
+            // Classical columns
+            ctx.fillStyle = '#f5f5dc';
+            for (let i = 0; i < 4; i++) {
+                let colX = buildingX + (buildingWidth / 5) * (i + 1);
+                ctx.fillRect(colX - 8, buildingY, 16, buildingHeight);
+                ctx.strokeRect(colX - 8, buildingY, 16, buildingHeight);
+                
+                // Column capital
+                ctx.fillRect(colX - 12, buildingY - 10, 24, 10);
+                ctx.strokeRect(colX - 12, buildingY - 10, 24, 10);
+            }
+        }
+
+        // Initialize canvas on page load
+        window.addEventListener('load', () => {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Initial placeholder
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#888';
+            ctx.font = '18px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText('Enter a description above and click Generate to create your architectural visualization', canvas.width/2, canvas.height/2);
+        });
+    </script>
+</body>
+</html>
